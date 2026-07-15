@@ -1,7 +1,7 @@
 npm install
 npm run dev
 
-Откроется http://localhost:5173 (Vite проксирует `/api` → Express на :4000).
+http://localhost:5173
 
 GET `/api/left?search=&offset=&limit=20` страница левого окна
 GET `/api/right?search=&offset=&limit=20` страница правого окна
