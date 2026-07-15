@@ -5,7 +5,7 @@ const custom = new Set();
 let order = [];
 let version = 0;
 
-const normaliseIds = (raw) => {
+function normaliseIds(raw) {
   const out = [];
   if (!Array.isArray(raw)) return out;
   for (const v of raw) {
@@ -72,7 +72,7 @@ export function reorder(activeId, overId) {
   return true;
 }
 
-const matches = (id, search) => {
+function matches(id, search) {
   if (search === null || search === undefined || search === '') return true;
   return String(id).includes(String(search).trim());
 };
@@ -96,7 +96,7 @@ export function getLeftPage({ search, offset = 0, limit = 20 }) {
     if (!ok || isSel) continue;
 
     if (skipped < off) {
-      skipped += 1;
+      skipped++;
       continue;
     }
     items.push(id);
@@ -125,10 +125,6 @@ export function getRightPage({ search, offset = 0, limit = 20 }) {
   const filtered = order.filter((id) => matches(id, search));
   const items = filtered.slice(off, off + lim);
   return { items, hasMore: off + lim < filtered.length };
-}
-
-export function getVersion() {
-  return version;
 }
 
 export function getState() {

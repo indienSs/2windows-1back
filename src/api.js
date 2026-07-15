@@ -16,21 +16,23 @@ async function postJSON(path, body) {
   return res.json();
 }
 
-export const fetchLeft = ({ search, offset, limit = 20 }) =>
-  getJSON(
+export function fetchLeft({ search, offset, limit = 20 }) {
+  return getJSON(
     `${BASE}/left?search=${encodeURIComponent(search ?? '')}` +
-      `&offset=${offset}&limit=${limit}`,
+    `&offset=${offset}&limit=${limit}`,
   );
-
-export const fetchRight = ({ search, offset, limit = 20 }) =>
-  getJSON(
+}
+  
+export function fetchRight({ search, offset, limit = 20 }) {
+  return getJSON(
     `${BASE}/right?search=${encodeURIComponent(search ?? '')}` +
       `&offset=${offset}&limit=${limit}`,
   );
-
-export const fetchVersion = () => getJSON(`${BASE}/version`);
+}
 
 export class ApiQueue {
+  #opTimer;
+  #addTimer;
   constructor({ onFlushed } = {}) {
     this.onFlushed = onFlushed ?? (() => {});
 
@@ -44,8 +46,8 @@ export class ApiQueue {
 
     this.paused = false;
 
-    this._opTimer = setInterval(() => this._flushOps(), this.OP_INTERVAL);
-    this._addTimer = setInterval(() => this._flushAdd(), this.ADD_INTERVAL);
+    this.#opTimer = setInterval(() => this.#flushOps(), this.OP_INTERVAL);
+    this.#addTimer = setInterval(() => this.#flushAdd(), this.ADD_INTERVAL);
   }
 
   requestAdd(ids) {
@@ -76,7 +78,7 @@ export class ApiQueue {
     this.paused = false;
   }
 
-  async _flushAdd() {
+  async #flushAdd() {
     if (this.addBatch.size === 0) return;
     const ids = [...this.addBatch];
     this.addBatch.clear();
@@ -88,7 +90,7 @@ export class ApiQueue {
     }
   }
 
-  async _flushOps() {
+  async #flushOps() {
     if (this.paused) return;
 
     let mutated = false;
@@ -122,9 +124,9 @@ export class ApiQueue {
   }
 
   destroy() {
-    clearInterval(this._opTimer);
-    clearInterval(this._addTimer);
-    this._flushAdd();
-    this._flushOps();
+    clearInterval(this.#opTimer);
+    clearInterval(this.#addTimer);
+    this.#flushAdd();
+    this.#flushOps();
   }
 }

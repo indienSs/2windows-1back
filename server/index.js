@@ -9,7 +9,6 @@ import {
   reorder,
   getLeftPage,
   getRightPage,
-  getVersion,
   getState,
 } from './store.js';
 
