@@ -27,11 +27,11 @@ function SortableRow({ id, onDeselect }) {
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <span className="drag-handle" {...attributes} {...listeners} title="Тяните для сортировки">
-        ⠿
+        ::
       </span>
       <span className="row-id">#{id}</span>
-      <button className="btn btn-remove" onClick={() => onDeselect(id)} title="Убрать ←">
-        ←
+      <button className="btn btn-remove" onClick={() => onDeselect(id)} title="Убрать <=">
+        {"<="}
       </button>
     </div>
   );
