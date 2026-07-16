@@ -26,7 +26,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>2 rows 1 back</h1>
+        <h1>2 windows 1 back</h1>
         <p className="subtitle">
           1 000 000 элементов. Добавление пакетами 10 с. Синхронизация 1 с.
         </p>
